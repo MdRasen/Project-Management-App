@@ -110,7 +110,6 @@ class TaskController extends Controller
         $data = $request->validated();
         // @var $image \Illuminate\Http\UploadedFile
         $image = $data['image'] ?? null;
-        $data['created_by'] = Auth::id();
         $data['updated_by'] = Auth::id();
         if ($image) {
             if ($task->image_path) {
@@ -134,5 +133,31 @@ class TaskController extends Controller
         }
         $task->delete();
         return to_route("task.index")->with('success', "Task \"$name\" has been deleted.");
+    }
+
+    public function myTasks()
+    {
+        $user = Auth::user();
+        $query = Task::query()->where('assigned_user_id', $user->id);
+
+        $sortField = request('sort_field', 'created_at');
+        $sortDirection = request('sort_direction', 'desc');
+
+        // Check if name exist
+        if (request('name')) {
+            $query->where('name', 'like', '%' . request('name') . '%');
+        }
+        // Check if status exist
+        if (request('status')) {
+            $query->where('status', request('status'));
+        }
+
+        $tasks = $query->orderBy($sortField, $sortDirection)->paginate(10);
+
+        return inertia("Task/Index", [
+            "tasks" => TaskResource::collection($tasks),
+            'queryParams' => request()->query() ?: null, //If empty array, then set null
+            'success' => session('success')
+        ]);
     }
 }
