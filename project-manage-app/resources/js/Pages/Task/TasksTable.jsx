@@ -153,8 +153,14 @@ export default function TasksTable({
                                         style={{ width: 60 }}
                                     />
                                 </td>
-                                <td className="px-3 py-2 text-white">
-                                    <p>{task.name}</p>
+                                <th className="px-3 py-2">
+                                    <div className="text-gray-100 text-wrap hover:underline">
+                                        <Link
+                                            href={route("task.show", task.id)}
+                                        >
+                                            {task.name}
+                                        </Link>
+                                    </div>
                                     {!hideProjectName && (
                                         <p className="text-gray-400 text-sm hover:underline">
                                             <Link
@@ -167,7 +173,7 @@ export default function TasksTable({
                                             </Link>
                                         </p>
                                     )}
-                                </td>
+                                </th>
                                 <td className="px-3 py-2">
                                     <span
                                         className={
