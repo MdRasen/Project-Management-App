@@ -1,6 +1,5 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head } from "@inertiajs/react";
-import { USER_STATUS_CLASS_MAP, USER_STATUS_TEXT_MAP } from "@/constants";
+import { Head, Link } from "@inertiajs/react";
 import TasksTable from "../Task/TasksTable";
 
 export default function Show({ auth, user, tasks, queryParams }) {
@@ -8,9 +7,17 @@ export default function Show({ auth, user, tasks, queryParams }) {
         <AuthenticatedLayout
             user={auth.user}
             header={
-                <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                    {`User "${user.name}"`}
-                </h2>
+                <div className="flex justify-between items-center">
+                    <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                        {`User "${user.name}"`}
+                    </h2>
+                    <Link
+                        href={route("user.edit", user.id)}
+                        className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
+                    >
+                        Edit User
+                    </Link>
+                </div>
             }
         >
             <Head title={`User "${user.name}"`} />
@@ -19,7 +26,7 @@ export default function Show({ auth, user, tasks, queryParams }) {
                     <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                         <div>
                             <img
-                                src={user.image_path}
+                                src="#"
                                 alt=""
                                 className="w-full h-64 object-cover"
                             />
@@ -41,40 +48,19 @@ export default function Show({ auth, user, tasks, queryParams }) {
                                     </div>
                                     <div className="mt-4">
                                         <label className="font-bold text-lg">
-                                            User Status
+                                            User Email
                                         </label>
-                                        <p className="mt-1">
-                                            <span
-                                                className={
-                                                    "px-2 py-1 rounded text-white " +
-                                                    USER_STATUS_CLASS_MAP[
-                                                        user.status
-                                                    ]
-                                                }
-                                            >
-                                                {
-                                                    USER_STATUS_TEXT_MAP[
-                                                        user.status
-                                                    ]
-                                                }
-                                            </span>
-                                        </p>
-                                    </div>
-                                    <div className="mt-4">
-                                        <label className="font-bold text-lg">
-                                            Created By
-                                        </label>
-                                        <p className="mt-1">
-                                            {user.createdBy.name}
-                                        </p>
+                                        <p className="mt-1">{user.email}</p>
                                     </div>
                                 </div>
                                 <div>
                                     <div className="mt-4">
                                         <label className="font-bold text-lg">
-                                            Due Date
+                                            Email Verified
                                         </label>
-                                        <p className="mt-1">{user.due_date}</p>
+                                        <p className="mt-1">
+                                            {user.email_verified_at}
+                                        </p>
                                     </div>
                                     <div className="mt-4">
                                         <label className="font-bold text-lg">
@@ -84,21 +70,7 @@ export default function Show({ auth, user, tasks, queryParams }) {
                                             {user.created_at}
                                         </p>
                                     </div>
-                                    <div className="mt-4">
-                                        <label className="font-bold text-lg">
-                                            Updated By
-                                        </label>
-                                        <p className="mt-1">
-                                            {user.updatedBy.name}
-                                        </p>
-                                    </div>
                                 </div>
-                            </div>
-                            <div className="mt-4">
-                                <label className="font-bold text-lg">
-                                    User Description
-                                </label>
-                                <p className="mt-1">{user.description}</p>
                             </div>
                         </div>
                     </div>
@@ -106,7 +78,10 @@ export default function Show({ auth, user, tasks, queryParams }) {
             </div>
             <div className="pb-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                    <h3 className="text-gray-200 text-2xl font-semibold">
+                        User Tasks
+                    </h3>
+                    <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mt-2">
                         <div className="p-6 text-gray-900 dark:text-gray-100">
                             <TasksTable
                                 tasks={tasks}

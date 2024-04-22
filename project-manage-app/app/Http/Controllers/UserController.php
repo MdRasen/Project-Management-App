@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use App\Models\User;
+use App\Http\Resources\UserResource;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\TaskResource;
 
 class UserController extends Controller
 {
@@ -63,7 +65,26 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        $query = Task::query()->where('assigned_user_id', $user->id);
+
+        $sortField = request('sort_field', 'created_at');
+        $sortDirection = request('sort_direction', 'desc');
+
+        // Check if name exist
+        if (request('name')) {
+            $query->where('name', 'like', '%' . request('name') . '%');
+        }
+        // Check if status exist
+        if (request('status')) {
+            $query->where('status', request('status'));
+        }
+
+        $tasks = $query->orderBy($sortField, $sortDirection)->paginate(10);
+        return inertia("User/Show", [
+            'user' => new UserResource($user),
+            "tasks" => TaskResource::collection($tasks),
+            'queryParams' => request()->query() ?: null, //If empty array, then set null
+        ]);
     }
 
     /**

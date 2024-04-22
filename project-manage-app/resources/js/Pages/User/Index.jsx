@@ -185,7 +185,14 @@ export default function Index({ auth, users, queryParams = null, success }) {
                                                     {user.id}
                                                 </td>
                                                 <td className="px-3 py-2 text-white text-nowrap">
-                                                    {user.name}
+                                                    <Link
+                                                        href={route(
+                                                            "user.show",
+                                                            user.id
+                                                        )}
+                                                    >
+                                                        {user.name}
+                                                    </Link>
                                                 </td>
                                                 <td className="px-3 py-2 text-nowrap">
                                                     {user.email}
