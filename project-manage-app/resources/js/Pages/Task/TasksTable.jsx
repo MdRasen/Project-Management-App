@@ -8,9 +8,12 @@ import { Link, router } from "@inertiajs/react";
 export default function TasksTable({
     tasks,
     queryParams = null,
+    pageName,
+    user,
     hideProjectName = false,
 }) {
     queryParams = queryParams || {}; // If null, then it's null else assigned an empty object
+    pageName = pageName || ""; // If null, then it's null else assigned an empty
     const searchFieldChanged = (paraName, value) => {
         if (value) {
             queryParams[paraName] = value;
@@ -18,7 +21,15 @@ export default function TasksTable({
             delete queryParams[paraName];
         }
         // Redirect with param values
-        router.get(route("task.index", queryParams));
+        if (pageName === "ProjectShow") {
+            router.get(route("project.index", queryParams));
+        } else if (pageName === "UserShow") {
+            router.get(route("user.show", [user, queryParams]));
+        } else if (pageName === "MyTasksShow") {
+            router.get(route("task.myTasks", queryParams));
+        } else {
+            router.get(route("task.index", queryParams));
+        }
     };
 
     const onKeyPress = (name, e) => {
@@ -38,7 +49,15 @@ export default function TasksTable({
             queryParams.sort_direction = "asc";
         }
         // Redirect with param values
-        router.get(route("task.index", queryParams));
+        if (pageName === "ProjectShow") {
+            router.get(route("project.index", queryParams));
+        } else if (pageName === "UserShow") {
+            router.get(route("user.show", [user, queryParams]));
+        } else if (pageName === "MyTasksShow") {
+            router.get(route("task.myTasks", queryParams));
+        } else {
+            router.get(route("task.index", queryParams));
+        }
     };
 
     const deleteTask = (task) => {

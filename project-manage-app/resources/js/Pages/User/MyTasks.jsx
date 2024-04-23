@@ -1,8 +1,8 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link } from "@inertiajs/react";
-import TasksTable from "./TasksTable";
+import TasksTable from "../Task/TasksTable";
 
-export default function MyTasks({ auth, tasks, queryParams = null, success }) {
+export default function Index({ auth, tasks, queryParams = null, success }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -34,6 +34,7 @@ export default function MyTasks({ auth, tasks, queryParams = null, success }) {
                             <TasksTable
                                 tasks={tasks}
                                 queryParams={queryParams}
+                                pageName="MyTasksShow"
                             />
                         </div>
                     </div>

@@ -86,6 +86,8 @@ export default function Show({ auth, user, tasks, queryParams }) {
                             <TasksTable
                                 tasks={tasks}
                                 queryParams={queryParams}
+                                pageName="UserShow"
+                                user={user}
                                 hideUserName={true}
                             />
                         </div>

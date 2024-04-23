@@ -184,16 +184,18 @@ export default function Index({ auth, users, queryParams = null, success }) {
                                                 <td className="px-3 py-2">
                                                     {user.id}
                                                 </td>
-                                                <td className="px-3 py-2 text-white text-nowrap">
-                                                    <Link
-                                                        href={route(
-                                                            "user.show",
-                                                            user.id
-                                                        )}
-                                                    >
-                                                        {user.name}
-                                                    </Link>
-                                                </td>
+                                                <th className="px-3 py-2">
+                                                    <div className="text-gray-100 text-wrap hover:underline">
+                                                        <Link
+                                                            href={route(
+                                                                "user.show",
+                                                                user.id
+                                                            )}
+                                                        >
+                                                            {user.name}
+                                                        </Link>
+                                                    </div>
+                                                </th>
                                                 <td className="px-3 py-2 text-nowrap">
                                                     {user.email}
                                                 </td>

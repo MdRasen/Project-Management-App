@@ -154,7 +154,7 @@ class TaskController extends Controller
 
         $tasks = $query->orderBy($sortField, $sortDirection)->paginate(10);
 
-        return inertia("Task/Index", [
+        return inertia("User/MyTasks", [
             "tasks" => TaskResource::collection($tasks),
             'queryParams' => request()->query() ?: null, //If empty array, then set null
             'success' => session('success')
