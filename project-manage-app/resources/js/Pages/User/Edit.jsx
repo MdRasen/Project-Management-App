@@ -19,6 +19,11 @@ export default function Edit({ auth, user }) {
         post(route("user.update", user.id));
     };
 
+    const resetData = (e) => {
+        e.preventDefault();
+        reset();
+    };
+
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -124,16 +129,26 @@ export default function Edit({ auth, user }) {
                                     className="mt-2"
                                 />
                             </div>
-                            <div className="mt-4 text-right">
-                                <Link
-                                    href={route("user.index")}
-                                    className="bg-gray-100 py-1 px-3 text-gray-800 rounded shadow transition-all hover:bg-gray-200 mr-2"
-                                >
-                                    Cancel
-                                </Link>
-                                <button className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600">
-                                    Submit
-                                </button>
+                            <div className="mt-4 flex justify-between items-center">
+                                <div>
+                                    <button
+                                        onClick={resetData}
+                                        className="bg-transparen py-1 px-3 text-white border border-emerald-500 rounded shadow transition-all hover:bg-emerald-500"
+                                    >
+                                        Reset
+                                    </button>
+                                </div>
+                                <div>
+                                    <Link
+                                        href={route("user.index")}
+                                        className="bg-gray-100 py-[6px] px-3 text-gray-800 rounded shadow transition-all hover:bg-gray-200 mr-2"
+                                    >
+                                        Cancel
+                                    </Link>
+                                    <button className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600">
+                                        Submit
+                                    </button>
+                                </div>
                             </div>
                         </form>
                     </div>
